@@ -1,0 +1,92 @@
+[
+    {
+        "EventProperties": {
+            "EnquedMessageTime": 1607243131479,
+            "MessageType": "IoTHubRouting"
+        },
+
+        "Body": [
+            {
+                "msgtype": "TELEMETRY DATA",
+                "Timestamp": 1607243134759,
+                "payload": [
+                    {
+                        "ID": 1,
+                        "Sensor": "Temp",
+                        "Value": 30,
+                        "Unit": "Celsius"
+                    },
+                    {
+                        "ID": 2,
+                        "Sensor": "Current",
+                        "Value": 58,
+                        "Unit": "Volt"
+                    }
+                ]
+            },
+            {
+                "msgtype": "TELEMETRY DATA",
+                "Timestamp": 1607243132333,
+                "payload": [
+                    {
+                        "ID": 3,
+                        "Sensor": "Temp",
+                        "Value": 28.8,
+                        "Unit": "Celsius"
+                    },
+                    {
+                        "ID": 4,
+                        "Sensor": "Current",
+                        "Value": 43,
+                        "Unit": "Volt"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "EventProperties": {
+            "EnquedMessageTime": 1607243131485,
+            "MessageType": "IoTHubRouting"
+        },
+
+        "Body": [
+            {
+                "msgtype": "TELEMETRY DATA",
+                "Timestamp": 1607243134759,
+                "payload": [
+                    {
+                        "ID": 5,
+                        "Sensor": "Temp",
+                        "Value": 30,
+                        "Unit": "Celsius"
+                    },
+                    {
+                        "ID": 6,
+                        "Sensor": "Current",
+                        "Value": 58,
+                        "Unit": "Volt"
+                    }
+                ]
+            },
+            {
+                "msgtype": "TELEMETRY DATA",
+                "Timestamp": 1607243132333,
+                "payload": [
+                    {
+                        "ID": 7,
+                        "Sensor": "Temp",
+                        "Value": 28.8,
+                        "Unit": "Celsius"
+                    },
+                    {
+                        "ID": 8,
+                        "Sensor": "Current",
+                        "Value": 43,
+                        "Unit": "Volt"
+                    }
+                ]
+            }
+        ]
+    }
+]

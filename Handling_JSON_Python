@@ -1,0 +1,113 @@
+{
+ "metadata": {
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.7-final"
+  },
+  "orig_nbformat": 2,
+  "kernelspec": {
+   "name": "python3",
+   "display_name": "Python 3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2,
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 149,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "from pathlib import Path\n",
+    "import json\n",
+    "\n",
+    "#https://medium.com/swlh/converting-nested-json-structures-to-pandas-dataframes-e8106c59976e\n",
+    "#https://github.com/MrFuguDataScience/JSON/blob/master/Nested_Json_Mult_Ex.ipynb\n",
+    "#https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.io.json.build_table_schema.html"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 161,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with open(\"SampleRoutingData.json\") as f:\n",
+    "    data =json.load(f)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 162,
+   "metadata": {},
+   "outputs": [
+    {
+     "output_type": "execute_result",
+     "data": {
+      "text/plain": [
+       "<generator object DataFrame.items at 0x7fdbfd390650>"
+      ]
+     },
+     "metadata": {},
+     "execution_count": 162
+    }
+   ],
+   "source": [
+    "df = pd.json_normalize(data)\n",
+    "\n",
+    "df = df.explode('Body')\n",
+    "\n",
+    "df.items()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 163,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df=pd.DataFrame(dict([ (k,pd.Series(v)) for k,v in df.items() ]))\n",
+    "\n",
+    "df=pd.json_normalize(json.loads(df.to_json(orient=\"records\")))\n",
+    "df=df.explode('Body.payload')\n",
+    "\n",
+    "df = pd.concat([df.drop(['Body.payload'], axis=1), df['Body.payload'].apply(pd.Series)], axis=1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 164,
+   "metadata": {},
+   "outputs": [
+    {
+     "output_type": "stream",
+     "name": "stdout",
+     "text": [
+      "(8, 8)\n   EventProperties.EnquedMessageTime EventProperties.MessageType  \\\n0                      1607243131479               IoTHubRouting   \n0                      1607243131479               IoTHubRouting   \n\n     Body.msgtype  Body.Timestamp  ID   Sensor  Value     Unit  \n0  TELEMETRY DATA   1607243134759   1     Temp   30.0  Celsius  \n0  TELEMETRY DATA   1607243134759   2  Current   58.0     Volt  \n"
+     ]
+    }
+   ],
+   "source": [
+    "print(df.shape)\n",
+    "print(df.head(2))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ]
+}
